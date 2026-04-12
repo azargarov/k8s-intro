@@ -1,6 +1,6 @@
 # Mount Namespace Lab
 
-This lab is meant for people who are new to containers and Kubernetes but want to understand one of the Linux building blocks underneath them.
+This lab is meant for you who are new to containers and Kubernetes but want to understand one of the Linux building blocks underneath them.
 
 The goal is simple: create a new **mount namespace**, mount a private filesystem there, and verify that the host does **not** see that mount.
 
@@ -102,20 +102,6 @@ This lab is best run on a training VM or non-critical Linux host.
 
 ---
 
-## Recommended training flow
-
-This works well for a live session:
-
-1. Trainer demonstrates the lab once.
-2. Participants open **two terminals**.
-3. Participants run the script themselves.
-4. During the pauses, they inspect what is visible from the host terminal.
-5. Trainer asks them what they expected to see before moving on.
-
-That keeps people engaged instead of just watching a terminal show.
-
----
-
 ## How to run the scripted lab
 
 From the directory containing the lab files:
@@ -133,9 +119,7 @@ Notes:
 
 ---
 
-## What participants should observe
-
-When the lab is running, they should notice three things.
+## What you should observe
 
 ### 1. The process is in a different mount namespace
 Inside the namespace, the script prints namespace information using `lsns` and `/proc/$$/ns/mnt`.
@@ -168,13 +152,11 @@ Inside the namespace, the script creates:
 /tmp/ns-demo/inside.txt
 ```
 
-After the namespace exits and cleanup runs, the mount is gone and the file is gone with it.
+After the namespace exits and cleanup runs, the mount is gone and the file is gone with it (tmpfs).
 
 ---
 
 ## Manual lab: do it step by step yourself
-
-This version is useful if you want participants to type the commands manually.
 
 ### Terminal 1: host shell
 
@@ -271,8 +253,6 @@ sudo rmdir /tmp/ns-demo 2>/dev/null || true
 
 ## Why this matters for containers and Kubernetes
 
-This lab is small, but the idea is big.
-
 Containers rely on Linux isolation primitives. Mount namespaces are one of them.
 
 A container runtime can use mount namespaces to give a process:
@@ -296,34 +276,6 @@ So when you understand this lab, you understand a real piece of what “containe
 
 ---
 
-## Good discussion questions for the session
-
-Use these during the training:
-
-1. Did we create a new disk, or only a new mount view?
-2. Why can a file exist for one process view and effectively disappear later?
-3. Why would a container need a private mount table?
-4. What is the difference between a directory existing and a mount existing on top of it?
-5. Why is `tmpfs` a good demo tool for this exercise?
-
----
-
-## Common confusion to address during the training
-
-### “Does mount namespace mean a new filesystem exists physically?”
-No. It means the process gets a different view of mounted filesystems.
-
-### “Does `tmpfs` mean everything is permanent in RAM?”
-No. In normal explanation for beginners, think of it as temporary memory-backed storage. That is enough for this lab.
-
-### “Why does the file disappear?”
-Because it was created inside a `tmpfs` mount that existed only inside that namespace, and the mount was removed when the namespace ended.
-
-### “So are containers just namespaces?”
-Not only namespaces. But namespaces are a big part of the isolation story.
-
----
-
 ## Troubleshooting
 
 ### `unshare: command not found`
@@ -342,7 +294,5 @@ That usually means mount propagation needs a closer look on that machine. For an
 ---
 
 ## Minimal takeaway
-
-If participants remember only one sentence, let it be this:
 
 **A mount namespace gives a process its own view of mounted filesystems, and that is one of the core mechanisms used by containers.**

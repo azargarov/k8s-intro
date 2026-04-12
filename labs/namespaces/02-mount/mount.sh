@@ -13,25 +13,6 @@ cleanup() {
 }
 trap cleanup EXIT
 
-## ── colors ────────────────────────────────────────────
-#RST=$'\e[0m'
-#BOLD=$'\e[1m'
-#DIM=$'\e[2m'
-#BLUE=$'\e[38;5;75m'
-#GREEN=$'\e[38;5;114m'
-#PURPLE=$'\e[38;5;141m'
-#CYAN=$'\e[38;5;80m'
-#YELLOW=$'\e[38;5;180m'
-#GRAY=$'\e[38;5;59m'
-#
-#SEP="${GRAY}$(printf '%.0s─' {1..52})${RST}"
-#step() { echo; echo "${BLUE}${BOLD}[$1/4]${RST} ${BOLD}$2${RST}"; echo "${GRAY}$(printf '%.0s┄' {1..48})${RST}"; }
-#
-## ── banner ────────────────────────────────────────────
-#echo "$SEP"
-#printf "  ${PURPLE}${BOLD}lab: mount namespace${RST}  ${DIM}(mnt)${RST}\n"
-#echo "$SEP"
-
 # ── step 1 ────────────────────────────────────────────
 step "$st" "$total" "namespace identity"
 echo "  this shell is running inside a NEW mount namespace"

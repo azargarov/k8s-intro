@@ -97,20 +97,6 @@ It:
 - shows how the same processes look from different views
 - explains what happens when PID 1 exits
 
-### `utils.sh`
-
-Contains shared helper functions for presentation and interaction, such as:
-
-- colors
-- banner rendering
-- step formatting
-- small “tip” hints
-- pause between stages
-
-The lab scripts source these helpers, so keep the relative path intact. `demo.sh` and `uts_pid_lab.sh` both source `../../utils.sh`.
-
----
-
 ## Prerequisites
 
 You need:
@@ -230,8 +216,6 @@ This makes the “same process, different view” idea much clearer.
 
 ## Manual version of the lab
 
-This is useful if participants want to repeat the exercise by hand later.
-
 ### 1. Check host hostname and shell PID
 
 ```bash
@@ -307,23 +291,7 @@ When PID 1 exits, the namespace ends. The background `sleep` started only inside
 
 ---
 
-## What participants should notice
-
-During the lab, ask them to actively answer these questions:
-
-1. Did the real host hostname change?
-2. Why does the inner shell appear as PID 1?
-3. Why can one process have one PID inside and another on the host?
-4. What happens to the background `sleep` when the namespaced PID 1 exits?
-5. Why does this feel similar to container behavior?
-
-If they can answer these, the lab worked.
-
----
-
 ## Expected learning outcome
-
-A good summary sentence for participants is:
 
 > A container is not a tiny virtual machine. It is usually just a normal Linux process running with isolated namespaces and constrained resources.
 
@@ -356,27 +324,6 @@ That is intentional. The pauses are part of the guided training flow.
 ### Color output looks strange
 
 This lab uses ANSI escape sequences from `utils.sh`. If a terminal does not support them well, the lab still works, but output may look less polished.
-
----
-
-## Suggested discussion after the lab
-
-You can close the exercise with a short discussion:
-
-- If hostname can be private, what else in Linux can be private?
-- If process numbering can be private, how does that help isolate applications?
-- Why is PID 1 behavior important in containers?
-- What is still shared with the host even when namespaces are used?
-- What else do we need besides namespaces to build containers well?
-
-That creates a good bridge to:
-
-- mount namespaces
-- network namespaces
-- cgroups
-- containers
-- Docker
-- Kubernetes
 
 ---
 

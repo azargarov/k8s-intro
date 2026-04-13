@@ -1,16 +1,23 @@
-#!/bin/env python3 
-
+import os
+import sys
 import time
 
-ALLOC_MB=100
-print("python: pid starting")
-time.sleep(2)
+chunk_mb = 10
+target_mb = 1024
+chunks = []
+allocated = 0
 
-print("python: allocating " + str(ALLOC_MB) + " MiB...")
-x = bytearray(ALLOC_MB * 1024 * 1024)
+print(f"[python] pid={os.getpid()}\n", flush=True)
 
-for i in range(0, len(x), 4096):
-    x[i] = 1
+try:
+    while allocated < target_mb:
+        chunks.append(bytearray(chunk_mb * 1024 * 1024))
+        allocated += chunk_mb
+        print(f"\r[python] allocated {allocated} MiB", end="" , flush=True)
+        time.sleep(0.2)
+    print("you can now continue                    ", flush=True)
 
-print("python: allocation finished")
-time.sleep(300)
+except MemoryError:
+    print("\r[python] MemoryError raised              ", flush=True)
+    time.sleep(2)
+    sys.exit(1)

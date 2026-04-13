@@ -380,7 +380,7 @@ If the interface was already deleted together with the namespace move, that is f
 
 ---
 
-## What participants should observe
+## What to observe
 
 There are a few key learning points.
 

@@ -4,14 +4,20 @@ These labs demonstrate the basic Linux namespace types that make containers poss
 
 ## Goal
 
-Understand that a container is not magic.  
 A container is primarily:
 
 - a regular Linux process
 - running with isolated namespaces
 - often constrained by cgroups
 - packaged with its own filesystem
+  
+  ## What you will learn
 
+- why a container is not a virtual machine
+- how Linux isolates processes, mounts, and networking
+- how cgroups enforce CPU and memory limits
+- how these primitives connect to Docker and Kubernetes
+  
 ## Labs
 
 0. `00-prerequisites`  

@@ -9,15 +9,26 @@ for cmd in unshare nsenter ip ps mount lsns readlink sudo; do
     printf "%-10s %s\n" "$cmd" "$(command -v "$cmd")"
   else
     printf "%-10s %s\n" "$cmd" "MISSING"
+    ((missing++))
   fi
 done
 
 echo
 echo "[sudo check]"
 if sudo -n true 2>/dev/null; then
-  echo "sudo       passwordless OK"
+  printf "%-10s %s\n" "sudo" "passwordless OK"
 else
-  echo "sudo       will likely ask for password during labs"
+  printf "%-10s %s\n" "sudo" "will likely ask for password during labs"
+fi
+
+echo 
+echo "[cgroup v2 check]"
+if [ -f /sys/fs/cgroup/cgroup.controllers ]; then 
+  printf "%-10s %s\n" "cgroup v2" "mounted OK"
+  printf "%-10s controllers: %s\n" "" "$(cat /sys/fs/cgroup/cgroup.controllers)"
+else
+  printf "%-10s %s\n" "cgroup v2" "not mounted (labs require cgroup v2)"
+  ((missing++))
 fi
 
 echo

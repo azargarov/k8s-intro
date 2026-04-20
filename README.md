@@ -7,6 +7,11 @@ Hands-on labs and training material for learning Linux primitives, containers, a
 This project is actively developed and still evolving.  
 The structure, labs, and explanations are being expanded and refined over time.
 
+## Limitations
+- macOS will not work
+- WSL 1 will not work  
+- WSL 2 may work but is not tested — a Linux VM is recommended
+
 ## What this repository is about
 
 This repository is built to explain how modern distributed applications work by starting from the Linux building blocks underneath them.
@@ -29,14 +34,14 @@ The goal of this project is to provide a practical and understandable path from:
 
 - how Linux isolates processes, mounts, and networking
 - how cgroups enforce CPU and memory limits
-- how containers are built from
+- how containers are built 
   
 ## Quick start
 
 ```bash
 git clone https://github.com/azargarov/k8s-intro.git
 cd k8s-intro
-./labs/namespaces/00-prerequisites/check.sh 
+./labs/prerequisites/check.sh 
 ```
 
 ## Suggested prep

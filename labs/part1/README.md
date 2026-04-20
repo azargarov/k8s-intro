@@ -48,7 +48,7 @@ Each lab demonstrates one namespace type.
 ## Current lab structure
 
 ```text
-labs/
+part1/
 ├── namespaces/
 │   ├── 00-prerequisites/
 │   ├── 01-uts-pid/
@@ -66,7 +66,7 @@ cgroup labs
 1. `01-memlimit`
 2. `02-cpulimit`
    
-namespases labs
+namespaces labs
 3. `01-uts-pid/demo.sh`
 4. `02-mount/demo.sh`
 5. `03-network/demo.sh`

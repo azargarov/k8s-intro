@@ -36,6 +36,41 @@ The goal of this project is to provide a practical and understandable path from:
 - how cgroups enforce CPU and memory limits
 - how containers are built 
   
+## How to use this course
+
+This repository supports two complementary ways of learning.
+They are designed to be used together.
+
+1. Guided mode (recommended for first pass)
+   
+Run the provided demo scripts:
+```bash
+./demo.sh
+```
+The script will:
+- execute the lab step by step
+- explain what is happening
+- pause and suggest checks
+- show expected behavior
+
+This mode helps you build intuition by observing the system in action.
+
+2. Hands-on mode (recommended for deeper understanding).
+   
+Open the README.md inside each lab and perform all steps manually.
+
+In this mode you:
+- run commands yourself
+- observe outputs directly
+- troubleshoot issues
+- verify your understanding without automation
+
+### Recommended workflow
+- Go through labs using demo.sh
+- Re-run selected labs using only README.md
+- Experiment: modify commands and observe behavior
+
+
 ## Quick start
 
 ```bash

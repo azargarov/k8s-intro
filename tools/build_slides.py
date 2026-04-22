@@ -4,7 +4,7 @@ from __future__ import annotations
 from pathlib import Path
 import re
 
-ROOT = Path(__file__).resolve().parent#.parent
+ROOT = Path(__file__).resolve().parent.parent
 LABS_DIR = ROOT / "labs"
 OUTPUT = ROOT / "slides.md"
 

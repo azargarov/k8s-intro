@@ -30,6 +30,18 @@ marp: true
 theme: default
 paginate: true
 size: 16:9
+style: |
+  section.compact {
+    font-size: 26px;
+  }
+
+  section {
+    font-size: 30px;
+  }
+
+  pre code {
+    font-size: 20px;
+  }
 ---
 
 # Kubernetes and Containers Intro

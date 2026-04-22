@@ -31,18 +31,59 @@ theme: default
 paginate: true
 size: 16:9
 style: |
-  section.compact {
+  section {
     font-size: 26px;
   }
 
-  section {
-    font-size: 30px;
+  section.compact {
+    font-size: 23px;
   }
 
-  pre code {
+  section.dense {
     font-size: 20px;
   }
+
+  section.lead {
+    text-align: center;
+  }
+
+  section h1 {
+    font-size: 1.45em;
+  }
+
+  section h2 {
+    font-size: 1.18em;
+    margin-bottom: 0.35em;
+  }
+
+  section p,
+  section ul,
+  section ol,
+  section blockquote {
+    line-height: 1.25;
+  }
+
+  section ul,
+  section ol {
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+  }
+
+  section li + li {
+    margin-top: 0.12em;
+  }
+
+  section pre {
+    font-size: 0.78em;
+    line-height: 1.15;
+  }
+
+  section code {
+    font-size: 0.9em;
+  }
 ---
+
+<!-- _class: lead -->
 
 # Kubernetes and Containers Intro
 
@@ -55,8 +96,10 @@ H2_RE = re.compile(r"^##\s+(.+?)\s*$", re.MULTILINE)
 
 def clean_text(text: str) -> str:
     text = text.strip()
-    lines = text.splitlines()
+    if not text:
+        return ""
 
+    lines = text.splitlines()
     cleaned: list[str] = []
     prev_blank = False
 
@@ -68,6 +111,19 @@ def clean_text(text: str) -> str:
         prev_blank = blank
 
     return "\n".join(cleaned).strip()
+
+
+def get_source_files() -> list[Path]:
+    files: list[Path] = []
+
+    for rel_path in SOURCES:
+        path = ROOT / rel_path
+        if not path.exists():
+            print(f"Warning: source file not found, skipping: {rel_path}")
+            continue
+        files.append(path)
+
+    return files
 
 
 def parse_readme(content: str) -> dict | None:
@@ -102,20 +158,59 @@ def parse_readme(content: str) -> dict | None:
     }
 
 
-def get_source_files() -> list[Path]:
-    files: list[Path] = []
+def content_line_count(text: str) -> int:
+    return sum(1 for line in text.splitlines() if line.strip())
 
-    for rel_path in SOURCES:
-        path = ROOT / rel_path
-        if not path.exists():
-            raise FileNotFoundError(f"Source file not found: {rel_path}")
-        files.append(path)
 
-    return files
+def slide_class_for(body: str) -> str:
+    n = content_line_count(body)
+
+    if n >= 14:
+        return "dense"
+    if n >= 9:
+        return "compact"
+    return ""
+
+
+def split_body(body: str, max_lines: int = 10) -> list[str]:
+    body = clean_text(body)
+    if not body:
+        return [""]
+
+    blocks = [b.strip() for b in body.split("\n\n") if b.strip()]
+    if not blocks:
+        return [body]
+
+    parts: list[str] = []
+    current: list[str] = []
+    current_lines = 0
+
+    for block in blocks:
+        block_lines = content_line_count(block)
+
+        # keep very large block as its own part
+        if not current and block_lines > max_lines:
+            parts.append(block)
+            continue
+
+        if current and current_lines + block_lines > max_lines:
+            parts.append("\n\n".join(current))
+            current = [block]
+            current_lines = block_lines
+        else:
+            current.append(block)
+            current_lines += block_lines
+
+    if current:
+        parts.append("\n\n".join(current))
+
+    return parts if parts else [body]
 
 
 def make_title_slide(title: str, relpath: Path) -> str:
     return f"""---
+
+<!-- _class: lead -->
 
 # {title}
 
@@ -125,22 +220,35 @@ def make_title_slide(title: str, relpath: Path) -> str:
 
 def make_intro_slide(title: str, intro: str) -> str:
     body = intro if intro else "_No introduction provided._"
+    cls = slide_class_for(body)
+    class_line = f'<!-- _class: {cls} -->\n\n' if cls else ""
+
     return f"""---
 
-# {title}
+{class_line}# {title}
 
 {body}
 """
 
 
-def make_section_slide(section_title: str, body: str) -> str:
-    body = body if body else "_No content provided._"
-    return f"""---
+def make_section_slides(section_title: str, body: str) -> list[str]:
+    parts = split_body(body, max_lines=10)
+    slides: list[str] = []
 
-## {section_title}
+    for i, part in enumerate(parts, start=1):
+        title = section_title if len(parts) == 1 else f"{section_title} ({i}/{len(parts)})"
+        cls = slide_class_for(part)
+        class_line = f'<!-- _class: {cls} -->\n\n' if cls else ""
+        part_body = part if part else "_No content provided._"
 
-{body}
-"""
+        slides.append(f"""---
+
+{class_line}## {title}
+
+{part_body}
+""")
+
+    return slides
 
 
 def build_slides() -> str:
@@ -159,7 +267,7 @@ def build_slides() -> str:
         chunks.append(make_intro_slide(parsed["title"], parsed["intro"]))
 
         for slide in parsed["slides"]:
-            chunks.append(make_section_slide(slide["title"], slide["body"]))
+            chunks.extend(make_section_slides(slide["title"], slide["body"]))
 
     return "\n\n".join(chunks) + "\n"
 

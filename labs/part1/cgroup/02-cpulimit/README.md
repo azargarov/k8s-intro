@@ -10,8 +10,6 @@ You will:
 - move that process into the cgroup
 - observe how the kernel throttles it
 
----
-
 ## What this lab teaches
 
 This lab focuses on one simple idea:
@@ -43,8 +41,6 @@ This means:
 
 That is roughly **20% of one CPU core**.
 
----
-
 ## Prerequisites
 
 This lab expects:
@@ -53,8 +49,6 @@ This lab expects:
 - the **cpu** controller available
 - `sudo` access
 - Bash
-
----
 
 ## How to run
 
@@ -83,8 +77,6 @@ This gives you a baseline for comparison.
 ```
 
 In this mode the same workload runs without an explicit CPU quota.
-
----
 
 ## What the script does
 
@@ -145,8 +137,6 @@ The script prints:
 
 and explains what the counters mean.
 
----
-
 ## Useful counters
 
 The most interesting file is:
@@ -167,8 +157,6 @@ Common fields include:
 In **limited** mode, you should see throttling counters increase.
 
 In **no-limits** mode, you should usually see CPU usage increase without much or any throttling.
-
----
 
 ## Watch it live
 
@@ -193,8 +181,6 @@ Inspect the cgroup membership:
 cat /proc/<PID>/cgroup
 ```
 
----
-
 ## Expected behavior
 
 ### In `limit` mode
@@ -218,8 +204,6 @@ You should observe:
 
 This gives a good side-by-side comparison with the limited run.
 
----
-
 ## Cleanup
 
 The script automatically cleans up on exit.
@@ -231,8 +215,6 @@ It will:
 - remove the child cgroup directory
 
 So repeated runs should not leave junk behind.
-
----
 
 ## Troubleshooting
 
@@ -261,8 +243,6 @@ If `cpu` is missing, this environment does not expose CPU control through cgroup
 ### Permission errors
 
 This lab creates and configures a cgroup under `/sys/fs/cgroup`, so `sudo` is required.
-
----
 
 ## Suggested order
 

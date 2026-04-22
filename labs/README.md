@@ -29,15 +29,9 @@ When container is started by a system what really happens is:
 
 That combination creates the environment we call a **container**.
 
----
-
-## The simplest mental model
-
-A short explanation is:
 
 > A container is a regular Linux process that has been isolated, limited, and given its own filesystem view.
 
----
 
 ## Namespaces — separate view
 
@@ -80,7 +74,6 @@ Namespaces answer the question:
 
 > “What parts of the system can this process see?”
 
----
 
 ## Cgroups — control and measure resources
 
@@ -108,7 +101,6 @@ Cgroups answer the question:
 
 Without cgroups, one badly behaving process could consume too much CPU or memory and disturb other workloads.
 
----
 
 ## Root filesystem — changing what `/` means
 
@@ -164,7 +156,6 @@ This part answers the question:
 
 > “What files does this process see as its system?”
 
----
 
 ## Putting it together
 
@@ -185,7 +176,6 @@ The runtime, such as Docker, containerd, or CRI-O, does the setup work:
 - connect networking
 - manage logs and lifecycle
 
----
 
 ## Why this became useful
 
@@ -208,16 +198,3 @@ They help with:
 - **operations**  
   platforms like Kubernetes can schedule, restart, and scale them more easily
 
----
-
-## Very short slide version
-
-> **Container = process + namespaces + cgroups + root filesystem**
-
-Under it:
-
-- **namespaces** → what it can see  
-- **cgroups** → what it can use  
-- **root filesystem** → what files it sees as `/`
-
----

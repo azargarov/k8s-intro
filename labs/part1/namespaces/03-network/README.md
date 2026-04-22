@@ -12,8 +12,6 @@ The goal is simple:
 
 This is one of the cleanest ways to show that Linux can create multiple isolated network worlds on the same host.
 
----
-
 ## What this lab teaches
 
 After this lab, you should understand that:
@@ -29,8 +27,6 @@ After this lab, you should understand that:
 - a **veth pair** acts like a virtual cable between two network namespaces
 - communication works only after interfaces are moved, addressed, and brought up
 - this is one of the foundations used by containers and Kubernetes networking
-
----
 
 ## Why this matters
 
@@ -59,8 +55,6 @@ it does not emulate a whole machine and it does not boot its own kernel.
 It is just a group of isolated processes that share the host kernel.
 
 That is why a container can feel like a small machine from the inside, while still being much lighter than a VM.
-
----
 
 ## Small theory section
 
@@ -100,8 +94,6 @@ Just creating the namespace is not enough. You often must explicitly bring loopb
 ip -n red link set lo up
 ```
 
----
-
 ## Files in this lab
 
 ### `demo.sh`
@@ -139,8 +131,6 @@ which python3
 which curl
 ```
 
----
-
 ## Recommended way to run the lab
 
 Run it from the lab directory:
@@ -156,8 +146,6 @@ This works best if you have:
 - **Terminal 2** for inspection commands while the script pauses
 
 That makes the exercise much more interactive.
-
----
 
 ## What the guided lab does
 
@@ -236,8 +224,6 @@ The script suggests a very useful extension:
 
 That makes the lab feel more like a real application path, not just a ping test.
 
----
-
 ## Best way to observe it during training
 
 Use **two terminals**.
@@ -277,8 +263,6 @@ If you want a more shell-like experience:
 sudo ip netns exec red bash
 sudo ip netns exec blue bash
 ```
-
----
 
 ## Manual version of the lab
 
@@ -378,8 +362,6 @@ sudo ip link del veth-blue 2>/dev/null || true
 
 If the interface was already deleted together with the namespace move, that is fine.
 
----
-
 ## What to observe
 
 There are a few key learning points.
@@ -405,8 +387,6 @@ That sequence is useful for troubleshooting later.
 ### 4. This is already “container-style networking”
 
 You are not using Docker here. You are using raw Linux features directly.
-
----
 
 ## Common problems
 
@@ -446,8 +426,6 @@ sudo ip netns exec red ss -ltnp
 
 Also verify that `python3` and `curl` exist.
 
----
-
 ## How this connects to containers and Kubernetes
 
 In container platforms, something similar happens behind the scenes:
@@ -466,7 +444,3 @@ Kubernetes adds more layers on top:
 - kube-proxy or eBPF-based routing
 
 But underneath all that, Linux network namespaces are still one of the core pieces.
-
----
-
-

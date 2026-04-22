@@ -11,8 +11,6 @@ By the end of this lab, you should be able to explain:
 - that Docker also applies resource control through cgroups
 - that `docker exec` enters the running container environment
 
----
-
 ## Why this matters
 
 In the first Docker lab, you used Docker as a tool:
@@ -32,8 +30,6 @@ This lab answers that by inspecting the running container from both sides:
 - from the host
 - from inside the container
 
----
-
 ## What you need
 
 Check that Docker is available:
@@ -49,8 +45,6 @@ which ps
 which lsns
 which readlink
 ```
-
----
 
 ## Step 1 — Start a container
 
@@ -70,8 +64,6 @@ What to notice:
 
 - the container is running in the background
 - Docker shows the image, name, status, and published ports
-
----
 
 ## Step 2 — Inspect basic metadata
 
@@ -102,8 +94,6 @@ What to notice:
 - Docker knows the container network configuration
 - this already suggests that a container is tied to a real host process
 
----
-
 ## Step 3 — Look at the container process on the host
 
 Show the process directly from the host:
@@ -117,8 +107,6 @@ What to notice:
 - the container has a real PID on the host
 - Docker did not create a tiny virtual machine
 - the container is represented by normal Linux processes
-
----
 
 ## Step 4 — Compare namespaces
 
@@ -154,8 +142,6 @@ Useful namespaces to look for:
 - `uts` — hostname namespace
 - `ipc` — IPC namespace
 
----
-
 ## Step 5 — Look at cgroup membership
 
 Show which cgroup the process belongs to:
@@ -177,8 +163,6 @@ What to notice:
 - the process belongs to a cgroup
 - Docker uses cgroups together with namespaces
 - this connects directly to your earlier cgroup labs
-
----
 
 ## Step 6 — Enter the running container
 
@@ -210,8 +194,6 @@ What to notice:
 - the network view is separate from the host
 - the filesystem looks like a compact standalone system
 
----
-
 ## Step 7 — Compare inside and outside
 
 From the host, show the process again:
@@ -229,8 +211,6 @@ This is the key idea:
 
 That illusion is created by Linux kernel features, not by a full virtual machine.
 
----
-
 ## Step 8 — Clean up
 
 Stop the container:
@@ -245,8 +225,6 @@ Remove it:
 docker rm web1
 ```
 
----
-
 ## What you learned
 
 In this lab:
@@ -257,8 +235,6 @@ In this lab:
 - you compared namespaces between your shell and the container process
 - you looked at cgroup membership
 - you entered the running container with `docker exec`
-
----
 
 ## Key idea
 

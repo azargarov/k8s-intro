@@ -5,8 +5,6 @@ This lab demonstrates two core Linux isolation mechanisms that later become part
 - **UTS namespace** — gives a process its own hostname and domain name view
 - **PID namespace** — gives a process its own process tree and PID numbering
 
----
-
 ## What this lab teaches
 
 After this lab, you should understand that:
@@ -16,8 +14,6 @@ After this lab, you should understand that:
 - the **same process has different PID views** depending on where you look from
 - when **PID 1 exits inside a PID namespace**, that namespace ends and its remaining processes are terminated
 - containers are not magic — they are built on Linux process isolation primitives like these
-
----
 
 ## Why this matters
 
@@ -30,8 +26,6 @@ A container is usually just:
 - and limited resources via cgroups
 
 This lab helps build that mental model from the Linux level upward.
-
----
 
 ## Small theory section
 
@@ -68,8 +62,6 @@ Inside Linux, PID 1 is special.
 In a PID namespace, the first process acts as the “init” process for that namespace. When it exits, the namespace is torn down, and remaining processes in that namespace are normally terminated.
 
 That is an important idea for understanding why containers stop when their main process exits.
-
----
 
 ## Files in this lab
 
@@ -115,8 +107,6 @@ which unshare
 
 Usually it comes from `util-linux`.
 
----
-
 ## Recommended way to run the lab
 
 Run it from the lab directory:
@@ -133,8 +123,6 @@ sudo unshare --fork --pid --uts --mount-proc ./uts_pid_lab.sh
 ```
 
 That is the actual core of the lab. The rest is explanation and guided observation.
-
----
 
 ## What the guided lab does
 
@@ -179,8 +167,6 @@ When `uts_pid_lab.sh` exits, `demo.sh` resumes on the host and confirms:
 
 That closes the loop.
 
----
-
 ## Best way to observe it during training
 
 Use **two terminals**.
@@ -211,8 +197,6 @@ sudo lsns -p <host-pid> -t uts,pid
 ```
 
 This makes the “same process, different view” idea much clearer.
-
----
 
 ## Manual version of the lab
 
@@ -289,7 +273,6 @@ exit
 
 When PID 1 exits, the namespace ends. The background `sleep` started only inside that namespace should not continue living independently there.
 
----
 
 ## Expected learning outcome
 
@@ -297,7 +280,6 @@ When PID 1 exits, the namespace ends. The background `sleep` started only inside
 
 This lab covers the **namespace isolation** part of that picture.
 
----
 
 ## Troubleshooting
 
@@ -324,8 +306,6 @@ That is intentional. The pauses are part of the guided training flow.
 ### Color output looks strange
 
 This lab uses ANSI escape sequences from `utils.sh`. If a terminal does not support them well, the lab still works, but output may look less polished.
-
----
 
 ## Short conclusion
 

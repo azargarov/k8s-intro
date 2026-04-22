@@ -49,7 +49,3 @@ cd k8s-intro
 - Linux VM or machine with `sudo`
 - `util-linux`, `iproute2`, `procps`, `python3` installed
 - run `labs/prerequisites/check.sh` before the session
-
-## License
-
-MIT

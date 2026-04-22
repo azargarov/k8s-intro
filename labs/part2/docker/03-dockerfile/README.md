@@ -11,7 +11,6 @@ By the end of this lab, you should be able to explain:
 - how your files get into the image
 - how a container is started from that image
 
----
 
 ## Why this matters
 
@@ -25,7 +24,6 @@ you describe the image in a `Dockerfile`,
 Docker builds it,
 and then anyone can run the result the same way.
 
----
 
 ## What you need
 
@@ -41,8 +39,6 @@ Create a working directory for the lab:
 mkdir -p docker-lab-03
 cd docker-lab-03
 ```
-
----
 
 ## Step 1 — Create a simple web page
 
@@ -75,8 +71,6 @@ What to notice:
 - this is your custom content
 - later you will copy it into the image
 
----
-
 ## Step 2 — Create the Dockerfile
 
 Create a file named `Dockerfile`:
@@ -101,8 +95,6 @@ What this means:
 
 This is enough for a first useful image.
 
----
-
 ## Step 3 — Build the image
 
 Build your image and tag it as `my-nginx:v1`:
@@ -123,8 +115,6 @@ What to notice:
 - the final image now exists locally
 - your image has a name and tag: `my-nginx:v1`
 
----
-
 ## Step 4 — Run a container from your image
 
 Start a container in the background:
@@ -143,8 +133,6 @@ What to notice:
 
 - the container runs from your own image
 - host port `8081` is mapped to container port `80`
-
----
 
 ## Step 5 — Access your page
 
@@ -165,8 +153,6 @@ What to notice:
 - nginx is running inside the container
 - the page content is the file you created yourself
 - this proves your custom file was built into the image
-
----
 
 ## Step 6 — View logs
 
@@ -193,8 +179,6 @@ What to notice:
 - Docker collects logs from the running container
 - your HTTP requests appear in nginx access logs
 
----
-
 ## Step 7 — Inspect the image history
 
 See how the image was built:
@@ -210,8 +194,6 @@ What to notice:
 
 This is one of Docker's core ideas:
 images are built in layers.
-
----
 
 ## Step 8 — Stop and remove the container
 
@@ -233,8 +215,6 @@ Check that it is gone:
 docker ps -a
 ```
 
----
-
 ## Step 9 — Optional cleanup
 
 Remove your image too:
@@ -242,8 +222,6 @@ Remove your image too:
 ```bash
 docker rmi my-nginx:v1
 ```
-
----
 
 ## What you learned
 
@@ -255,16 +233,12 @@ In this lab:
 - you ran a container from that image
 - you confirmed that your custom content was inside the image
 
----
-
 ## Key idea
 
 A `Dockerfile` is a recipe for building an image.
 
 The image becomes a portable package,
 and a container is a running instance of that package.
-
----
 
 ## Suggested follow-up
 

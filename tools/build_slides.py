@@ -5,8 +5,25 @@ from pathlib import Path
 import re
 
 ROOT = Path(__file__).resolve().parent.parent
-LABS_DIR = ROOT / "labs"
 OUTPUT = ROOT / "slides.md"
+
+SOURCES = [
+    "README.md",
+    "labs/README.md",
+    "labs/prerequisites/README.md",
+    "labs/part1/README.md",
+    "labs/part1/cgroup/README.md",
+    "labs/part1/cgroup/01-memlimit/README.md",
+    "labs/part1/cgroup/02-cpulimit/README.md",
+    "labs/part1/namespaces/README.md",
+    "labs/part1/namespaces/01-uts-pid/README.md",
+    "labs/part1/namespaces/02-mount/README.md",
+    "labs/part1/namespaces/03-network/README.md",
+    "labs/part1/namespaces/04-build-container-by-hand/README.md",
+    "labs/part2/docker/01-first-contaner/README.md",
+    "labs/part2/docker/02-under-the-hood/README.md",
+    "labs/part2/docker/03-dockerfile/README.md",
+]
 
 MARP_HEADER = """---
 marp: true
@@ -22,10 +39,6 @@ Hands-on training
 
 H1_RE = re.compile(r"^#\s+(.+?)\s*$", re.MULTILINE)
 H2_RE = re.compile(r"^##\s+(.+?)\s*$", re.MULTILINE)
-
-
-def find_readmes(base: Path) -> list[Path]:
-    return sorted(p for p in base.rglob("README.md") if p.is_file())
 
 
 def clean_text(text: str) -> str:
@@ -54,7 +67,6 @@ def parse_readme(content: str) -> dict | None:
     start_after_h1 = h1_match.end()
 
     h2_matches = list(H2_RE.finditer(content))
-
     intro_end = h2_matches[0].start() if h2_matches else len(content)
     intro = clean_text(content[start_after_h1:intro_end])
 
@@ -76,6 +88,18 @@ def parse_readme(content: str) -> dict | None:
         "intro": intro,
         "slides": slides,
     }
+
+
+def get_source_files() -> list[Path]:
+    files: list[Path] = []
+
+    for rel_path in SOURCES:
+        path = ROOT / rel_path
+        if not path.exists():
+            raise FileNotFoundError(f"Source file not found: {rel_path}")
+        files.append(path)
+
+    return files
 
 
 def make_title_slide(title: str, relpath: Path) -> str:
@@ -110,14 +134,13 @@ def make_section_slide(section_title: str, body: str) -> str:
 def build_slides() -> str:
     chunks: list[str] = [MARP_HEADER.strip()]
 
-    readmes = find_readmes(LABS_DIR)
-
-    for readme in readmes:
+    for readme in get_source_files():
         relpath = readme.relative_to(ROOT)
         content = readme.read_text(encoding="utf-8")
         parsed = parse_readme(content)
 
         if not parsed:
+            print(f"Skipping {relpath}: no H1 found")
             continue
 
         chunks.append(make_title_slide(parsed["title"], relpath))

@@ -10,8 +10,6 @@ By the end of this lab, you should be able to explain:
 - what a container is
 - how Docker exposes a service to the host
 
----
-
 ## Why this matters
 
 Docker gives a practical way to package and run applications consistently.
@@ -29,8 +27,6 @@ This is the first useful mental model:
 - an **image** is a packaged application filesystem plus metadata
 - a **container** is a running instance of that image
 
----
-
 ## What you need
 
 Check that Docker is installed and working:
@@ -38,8 +34,6 @@ Check that Docker is installed and working:
 ```bash
 docker version
 ```
-
----
 
 ## Step 1 — Pull the image
 
@@ -60,8 +54,6 @@ What to notice:
 - `nginx:alpine` is now available locally
 - the image exists before any container is started
 
----
-
 ## Step 2 — Start a container
 
 Run nginx in the background:
@@ -81,8 +73,6 @@ What to notice:
 - container name: `web1`
 - image: `nginx:alpine`
 - port mapping: `8080 -> 80`
-
----
 
 ## Step 3 — Access the service
 
@@ -130,8 +120,6 @@ What to notice:
 - Docker captures logs written by the container
 - your HTTP request appears in the nginx access log
 
----
-
 ## Step 5 — Stop the container
 
 Stop it:
@@ -150,8 +138,6 @@ What to notice:
 
 - the container still exists
 - it is stopped, but not removed
-
----
 
 ## Step 6 — Remove the container
 
@@ -172,8 +158,6 @@ What to notice:
 - the container is gone
 - the image still remains on the system
 
----
-
 ## Step 7 — Optional cleanup
 
 Remove the image too:
@@ -181,8 +165,6 @@ Remove the image too:
 ```bash
 docker rmi nginx:alpine
 ```
-
----
 
 ## What you learned
 

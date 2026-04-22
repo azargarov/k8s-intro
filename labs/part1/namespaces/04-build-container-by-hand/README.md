@@ -9,8 +9,6 @@ A container is usually just:
 - often with resource limits
 - usually with a separate root filesystem
 
----
-
 ## What this lab teaches
 
 After this lab, you should understand that:
@@ -26,8 +24,6 @@ After this lab, you should understand that:
 - the main process inside a PID namespace can appear as **PID 1**
 - what Docker and container runtimes do is built on Linux features like these
 
----
-
 ## Why this matters
 
 This lab demonstrates the Linux kernel building blocks used to create a container:
@@ -38,7 +34,6 @@ This lab demonstrates the Linux kernel building blocks used to create a containe
 - network namespace → separate network stack
 
 Putting these together gives you the basic skeleton of a container.
----
 
 ## Small theory section
 
@@ -86,8 +81,6 @@ That includes:
 A newly created network namespace is usually very minimal.
 Often it starts with only `lo`, and `lo` may be down until you explicitly bring it up.
 
----
-
 ## What this lab is not
 
 This lab is deliberately incomplete.
@@ -101,8 +94,6 @@ What is still missing:
 - no image management
 - no runtime lifecycle
 - no bridge, veth, or container networking setup
-
----
 
 ## Files in this lab
 
@@ -131,8 +122,6 @@ It:
 - shows process list, interfaces, mounts, and namespace links
 - explains what is still missing compared with a real container
 
----
-
 ## Prerequisites
 
 You need:
@@ -155,8 +144,6 @@ which mount
 which ps
 ```
 
----
-
 ## Recommended way to run the lab
 
 Run it from the lab directory:
@@ -173,8 +160,6 @@ sudo unshare --fork --pid --uts --mount --net --mount-proc ./handmade_container.
 ```
 
 That is the core of the lab.
-
----
 
 ## What the guided lab does
 
@@ -227,8 +212,6 @@ The final stage connects the exercise back to real containers:
 - separate root filesystem gives a more container-like file view
 - runtimes automate all of this
 
----
-
 ## Best way to observe it during exercise
 
 Use **two terminals**.
@@ -258,8 +241,6 @@ What to notice:
 - host still sees the process with a normal host PID
 - the private tmpfs mount does not show up as a normal host mount entry
 - when the main process exits, the isolated environment disappears
-
----
 
 ## Manual version of the lab
 
@@ -353,8 +334,6 @@ By the end, they should have seen that:
 - one process can look surprisingly container-like
 - but without a new root filesystem, it is still clearly not a full container
 
----
-
 ## Troubleshooting
 
 ### `unshare: command not found`
@@ -381,5 +360,3 @@ Make sure the script really runs inside the `sudo unshare` environment.
 ### `mountpoint: command not found`
 
 Install `util-linux`, or replace the check with a different mount existence test.
-
----

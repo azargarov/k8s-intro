@@ -6,7 +6,6 @@ In this case, the resource is **memory**.
 
 The lab creates a new child cgroup, sets memory limits on it, starts a Python process that tries to allocate a lot of memory, moves that process into the cgroup, and then observes what the kernel reports.
 
----
 
 ## What this lab shows
 
@@ -17,14 +16,12 @@ The lab creates a new child cgroup, sets memory limits on it, starts a Python pr
 - how to inspect the result with `memory.events`
 - why cgroups are about **resource control**, not namespace-style isolation
 
----
 
 ## Files
 
 - `demo.sh` — the interactive lab script
 - `memalloc.py` — a Python program that keeps allocating memory in chunks
 
----
 
 ## Requirements
 
@@ -36,7 +33,6 @@ The lab creates a new child cgroup, sets memory limits on it, starts a Python pr
 
 The script checks that these exist before running.
 
----
 
 ## Run
 
@@ -57,8 +53,6 @@ or explicitly:
 ```bash
 ./demo.sh swap-off
 ```
-
----
 
 ## What the script does
 
@@ -122,7 +116,6 @@ The script prints:
 
 These files tell the story of what happened under memory pressure.
 
----
 
 ## What `memalloc.py` does
 
@@ -130,7 +123,6 @@ The Python helper allocates memory in chunks of **10 MiB** until it reaches a ta
 
 That makes it useful for demonstrating a process that wants far more memory than the cgroup allows.
 
----
 
 ## Watching from a second terminal
 
@@ -148,8 +140,6 @@ You can also inspect the process itself:
 ps -fp <PID>
 cat /proc/<PID>/cgroup
 ```
-
----
 
 ## Expected behavior
 
@@ -173,8 +163,6 @@ In this mode:
 The process may survive longer because some pages can move to swap.
 Depending on the system, you may see swap-related counters or different behavior before the process exits.
 
----
-
 ## Why this matters
 
 Cgroups are one of the core Linux building blocks behind containers.
@@ -186,8 +174,6 @@ What cgroups do:
 - account for resource consumption
 - keep one workload from starving others
 
----
-
 ## Cleanup
 
 When the lab exits, the script tries to:
@@ -198,4 +184,3 @@ When the lab exits, the script tries to:
 
 So each run should leave the system ready for the next demonstration.
 
----

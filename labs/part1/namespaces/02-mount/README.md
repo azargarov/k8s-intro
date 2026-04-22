@@ -4,8 +4,6 @@ This lab is meant for you who are new to containers and Kubernetes but want to u
 
 The goal is simple: create a new **mount namespace**, mount a private filesystem there, and verify that the host does **not** see that mount.
 
----
-
 ## What you should understand after this lab
 
 After running this exercise, you should be able to explain:
@@ -17,8 +15,6 @@ After running this exercise, you should be able to explain:
 - why a file created on a tmpfs in a private namespace can disappear when the namespace goes away.
 
 This is one of the easiest hands-on ways to see that containers are not magic. They are mostly regular Linux processes with isolation features.
-
----
 
 ## The idea in plain language
 
@@ -43,8 +39,6 @@ The important point is this:
 
 **A mount namespace does not create a new disk. It creates a new view of mounts.**
 
----
-
 ## What is `tmpfs`?
 
 `tmpfs` is a temporary memory-backed filesystem.
@@ -60,8 +54,6 @@ So in this lab:
 - and the mount and file disappear.
 
 That is exactly the kind of behavior people often describe as “ephemeral”.
-
----
 
 ## Files in this lab
 
@@ -86,8 +78,6 @@ Runs **inside** the new mount namespace. It:
 
 That is enough for the training. Participants can either run `demo.sh` or follow the manual commands from this README.
 
----
-
 ## Prerequisites
 
 You need:
@@ -99,8 +89,6 @@ You need:
 - two terminal windows if possible.
 
 This lab is best run on a training VM or non-critical Linux host.
-
----
 
 ## How to run the scripted lab
 
@@ -116,8 +104,6 @@ Notes:
 - The scripts source `../../utils.sh`, so in your training repo they should stay in the expected folder structure.
 - If someone copies only these two files elsewhere, the pretty formatting from `utils.sh` will be missing.
 - The core Linux idea still works even without that helper file; the manual steps below are the fallback version.
-
----
 
 ## What you should observe
 
@@ -154,8 +140,6 @@ Inside the namespace, the script creates:
 
 After the namespace exits and cleanup runs, the mount is gone and the file is gone with it (tmpfs).
 
----
-
 ## Manual lab: do it step by step yourself
 
 ### Terminal 1: host shell
@@ -173,8 +157,6 @@ sudo unshare --fork --mount bash
 ```
 
 Now you are inside the new mount namespace.
-
----
 
 ### Terminal 1: inside the new mount namespace
 
@@ -207,8 +189,6 @@ ls -l /tmp/ns-demo
 cat /tmp/ns-demo/inside.txt
 ```
 
----
-
 ### Terminal 2: host shell
 
 While Terminal 1 is still inside the namespace, check from the host:
@@ -225,8 +205,6 @@ Important subtle point:
 
 What you are proving is not “nothing at all exists”.
 What you are proving is: **the host does not share the same mount table entry**.
-
----
 
 ### Finish the manual lab
 
@@ -248,8 +226,6 @@ If the directory is still there and empty, remove it:
 ```bash
 sudo rmdir /tmp/ns-demo 2>/dev/null || true
 ```
-
----
 
 ## Why this matters for containers and Kubernetes
 
@@ -274,8 +250,6 @@ Kubernetes itself works at a higher level, but underneath, the container runtime
 
 So when you understand this lab, you understand a real piece of what “container isolation” actually means.
 
----
-
 ## Troubleshooting
 
 ### `unshare: command not found`
@@ -290,8 +264,6 @@ Use the manual commands from this README instead.
 
 ### The host unexpectedly sees the mount
 That usually means mount propagation needs a closer look on that machine. For an intro session, use the prepared training environment where the scripted lab has already been tested.
-
----
 
 ## Minimal takeaway
 

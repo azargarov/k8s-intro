@@ -7,6 +7,9 @@ on:
     branches: [main]
   workflow_dispatch:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build-slides:
     runs-on: ubuntu-latest
@@ -42,28 +45,16 @@ jobs:
             --pdf \
             --allow-local-files \
             --output slides.pdf
-
-      - name: Upload slides.md
-        uses: actions/upload-artifact@v4
-        with:
-          name: slides-md
-          path: slides.md
-
-      - name: Upload slides.pdf
-        uses: actions/upload-artifact@v4
-        with:
-          name: slides-pdf
-          path: slides.pdf
-      
+        
       - name: Build HTML
         run: |
-          marp slides.md \
-            --html \
-            --allow-local-files \
-            --output slides.html
+            marp slides.md \
+              --html \
+              --allow-local-files \
+              --output slides.html
 
-      - name: Upload slides.html
+      - name: Upload slides
         uses: actions/upload-artifact@v4
         with:
-          name: slides-html
-          path: slides.html
+          name: slides
+          path: slides*

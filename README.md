@@ -1,4 +1,4 @@
-# k8s-intro
+# containers-from-first-principles
 
 Hands-on labs and training material for learning Linux primitives, containers, and Kubernetes from first principles.
 
@@ -74,7 +74,7 @@ In this mode you:
 ## Quick start
 
 ```bash
-git clone https://github.com/azargarov/k8s-intro.git
+git clone https://github.com/azargarov/containers-from-first-principles.git
 cd k8s-intro
 ./labs/prerequisites/check.sh 
 ```
